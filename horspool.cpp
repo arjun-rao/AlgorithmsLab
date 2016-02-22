@@ -9,6 +9,7 @@
 
 #include<iostream>
 #include<string>
+#include<algorithm>
 #include<unistd.h>
 using namespace std;
 
@@ -26,8 +27,13 @@ int* generateShiftTable(string pattern)
 
 }
 
-int isMatch(string pattern,string text,int verbose=0)
+int isMatch(string pattern,string text,int verbose=0,int icase=0)
 {
+	if(icase)
+	{
+	   std::transform(text.begin(), text.end(), text.begin(), ::tolower);
+	   std::transform(pattern.begin(), pattern.end(), pattern.begin(), ::tolower);
+	}
 	int *stable = generateShiftTable(pattern);
 	int skip =0,i,tlength= text.length(),plength= pattern.length();
 	while( tlength-skip >= plength)
@@ -54,17 +60,27 @@ int isMatch(string pattern,string text,int verbose=0)
 
 int main(int argc,char *argv[])
 {
-	int *generateShiftTable,found,verbose=0;
+	int *generateShiftTable,found,verbose=0,icase =0;
 	string pattern,text;
 	opterr=0;
-	int option = getopt(argc,argv,"v");
-	if(option=='v')
-		verbose=1;
+	int option;
+	while((option = getopt(argc,argv,"vi"))!=-1)
+	{
+		switch(option)
+		{
+			case 'v':
+				verbose=1;
+				break;
+			case 'i':
+				icase=1;
+				break;
+		}			
+	}
 	cout<<"Pattern: ";
 	getline(cin,pattern);
 	cout<<"Text: ";
 	getline(cin,text);
-	if((found = isMatch(pattern,text,verbose))!=-1)
+	if((found = isMatch(pattern,text,verbose,icase))!=-1)
 		cout<<"Found at position: "<<found+1<<endl;
 	else
 		cout<<"Pattern not found"<<endl;
