@@ -40,7 +40,8 @@ void mergesort(int *a, int low, int high)
 }
 void merge(int *a, int low, int high, int mid)
 {
-    int i, j, k, c[50];
+    int i, j, k;
+    int * c = new int[high-low+1];
     i = low;
     k = 0;
     j = mid + 1;
@@ -75,6 +76,7 @@ void merge(int *a, int low, int high, int mid)
     {
         a[i] = c[k];
     }
+    delete [] c;
 }
 
 
