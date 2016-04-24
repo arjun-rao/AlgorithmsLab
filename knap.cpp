@@ -76,7 +76,24 @@ class Sack
 			cout<<endl;
 		}
 
-		cout << "\nThe maximum value for a knapsack of capacity " <<capacity <<"is" << table[number][capacity] << endl;
+		cout << "\nThe maximum value for a knapsack of capacity ";
+		cout << capacity <<"is" << table[number][capacity] << endl;
+		
+		int i=number,j=capacity;
+
+		cout<<"\nThe items in the knapsack are:\n";
+		while(i!=0 && j!=0)
+		{
+			if(table[i][j]!= table[i-1][j])
+			{
+				cout<<"Item "<<i<<" Value: "<<value[i-1]<<endl;
+				j=j-weight[i-1];
+				i--;
+			}
+			else
+				i--;
+		}
+
 	}
 
 	int max( int a, int b )

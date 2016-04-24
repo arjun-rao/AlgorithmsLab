@@ -11,8 +11,9 @@ int place(int row,int column);
 
 int main()
 {
-	int n;
+	int n,i;
 	scanf("%d",&n);
+	for(int i=0;i<n;i++)printf("%d ",board[i]);
 	queen(1,n);
 	return 0;
 }
